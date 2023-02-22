@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookingAppionmentAppWithLocalStorage</title>
+</head>
+<body>
+    <h1>Booking Appionment App</h1>
+    <form onsubmit="saveToLocalStorage(event)">
+        <label>NAME:</label>
+            <input type="text" id="n1" name="NAME" required/>
+        <label>EMAIL ID:</label>
+            <input type="email" id="n2" name="email" required/>
+        <label>PHONE NO.</label>
+            <input type="tel" id="n3" name="phoneNo" />
+        <button>SUBMIT</button>
+    </form><hr>
+     <ul id="lits"></ul>
+    <script>
+          function saveToLocalStorage(event){
+            event.preventDefault();
+            const Name=event.target.NAME.value;
+            const emailId=event.target.email.value;
+            const phoneNum=event.target.phoneNo.value;
+            const myobj={
+                Name,
+                emailId,
+                phoneNum
+            }
+            const obbj=JSON.stringify(myobj);
+            localStorage.setItem('myobj',obbj);
+              showUser(myobj);
+            }
+             function showUser(myobj){
+            const dd=document.getElementById("lits")
+            const d1=document.createElement('li');
+            const d2=document.createElement('input')
+            const d3=document.createElement('input');
+            d1.textContent=`${myobj.Name}-${myobj.emailId}-${myobj.phoneNum}`
+            d2.type="button"
+            d2.value='DELETE';
+            d3.type="button";d3.value='EDIT';
+            d2.onclick=()=>{
+                localStorage.removeItem('myobj',JSON.stringify(myobj))
+                dd.removeChild(d1);
+            }
+            d3.onclick=()=>{
+                localStorage.removeItem('myobj',JSON.stringify(myobj))
+                dd.removeChild(d1);
+                document.getElementById('n1').value=myobj.Name;
+                document.getElementById('n2').value=myobj.emailId;
+                document.getElementById('n3').value=myobj.phoneNum;
+            }
+            d1.appendChild(d3)
+            d1.appendChild(d2)
+            dd.appendChild(d1);
+          }
+    </script>
+</body>
+</html>
